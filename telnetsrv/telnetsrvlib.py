@@ -534,6 +534,7 @@ class TelnetHandlerBase(SocketServer.BaseRequestHandler):
                 pass
             else:
                 raise
+        self.sock.close()
         self.session_end()
 
     def session_start(self):
