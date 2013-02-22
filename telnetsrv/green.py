@@ -34,10 +34,13 @@ class TelnetHandler(TelnetHandlerBase):
 
     def getc(self, block=True):
         """Return one character from the input queue"""
-        try:
-            return self.cookedq.get(block)
-        except gevent.queue.Empty:
-            return ''
+        while True:
+            try:
+                return self.cookedq.get(block, timeout = 10)
+            except gevent.queue.Empty:
+                if block and not self.eof:
+                    continue
+                return ''
 
     def inputcooker_socket_ready(self):
         """Indicate that the socket is ready to be read"""

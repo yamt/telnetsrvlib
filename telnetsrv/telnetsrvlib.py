@@ -674,7 +674,8 @@ class TelnetHandlerBase(SocketServer.BaseRequestHandler):
             c = self.ansi_to_curses(c)
             if c == theNULL:
                 continue
-            
+            elif c == '':
+                return 'QUIT'
             elif c == curses.KEY_LEFT:
                 if insptr > 0:
                     insptr = insptr - 1
